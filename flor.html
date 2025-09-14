@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sunflower Garden with Shooting Stars</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .container {
+    text-align: center;
+    z-index: 10;
+    position: relative;
+    margin-top: -150px; /* súbelos, ajusta el valor */
+        }
+.message {
+    color: #fff;
+    font-size: 2.5rem;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: fadeInText 2s ease-in 1s forwards;
+    max-width: 800px;
+    line-height: 1.4;
+}
+
+.message.top {
+    margin-bottom: 1rem;   /* más cerca del segundo */
+    animation-delay: 0.5s; /* aparece primero */
+}
+
+.message.bottom {
+    margin-top: 1rem;
+    animation-delay: 2s;   /* aparece después */
+}
+
+        .garden {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 300px;
+            background: linear-gradient(to top, #2d5016 0%, #1a2e0a 100%);
+            z-index: 5;
+        }
+
+        .sunflower {
+            position: absolute;
+            bottom: 50px;
+            animation: sway 4s ease-in-out infinite;
+        }
+
+        .sunflower:nth-child(2) { left: 20%; animation-delay: -1s; }
+        .sunflower:nth-child(3) { left: 40%; animation-delay: -2s; }
+        .sunflower:nth-child(4) { left: 60%; animation-delay: -0.5s; }
+        .sunflower:nth-child(5) { left: 80%; animation-delay: -1.5s; }
+        .sunflower:nth-child(6) { left: 100%; animation-delay: -3s; }
+
+        .stem {
+            width: 8px;
+            height: 120px;
+            background: linear-gradient(to bottom, #4a7c59 0%, #2d5016 100%);
+            border-radius: 4px;
+            margin: 0 auto;
+        }
+
+        .flower-head {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: radial-gradient(circle at center, #8B4513 0%, #654321 30%, #FFD700 35%, #FFA500 100%);
+            position: relative;
+            margin: 0 auto;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+            animation: glow 3s ease-in-out infinite alternate;
+        }
+
+        .flower-head::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.3) 0%, transparent 50%);
+        }
+
+        .petal {
+            position: absolute;
+            width: 25px;
+            height: 60px;
+            background: linear-gradient(to top, #FFD700 0%, #FFA500 100%);
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            transform-origin: 50% 90%;
+            top: 30%;
+            left: 50%;
+            margin-left: -12.5px;
+            margin-top: -30px;
+        }
+
+        .petal:nth-child(1) { transform: rotate(0deg) translateY(-35px); }
+        .petal:nth-child(2) { transform: rotate(30deg) translateY(-35px); }
+        .petal:nth-child(3) { transform: rotate(60deg) translateY(-35px); }
+        .petal:nth-child(4) { transform: rotate(90deg) translateY(-35px); }
+        .petal:nth-child(5) { transform: rotate(120deg) translateY(-35px); }
+        .petal:nth-child(6) { transform: rotate(150deg) translateY(-35px); }
+        .petal:nth-child(7) { transform: rotate(180deg) translateY(-35px); }
+        .petal:nth-child(8) { transform: rotate(210deg) translateY(-35px); }
+        .petal:nth-child(9) { transform: rotate(240deg) translateY(-35px); }
+        .petal:nth-child(10) { transform: rotate(270deg) translateY(-35px); }
+        .petal:nth-child(11) { transform: rotate(300deg) translateY(-35px); }
+        .petal:nth-child(12) { transform: rotate(330deg) translateY(-35px); }
+
+        .star {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: #fff;
+            border-radius: 50%;
+            animation: twinkle 2s linear infinite;
+        }
+
+        .shooting-star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: linear-gradient(45deg, #fff, #4fc3f7);
+            border-radius: 50%;
+            opacity: 0;
+            animation: shoot 3s linear infinite;
+        }
+
+        .shooting-star::before {
+            content: '';
+            position: absolute;
+            top: 1px;
+            right: 2px;
+            width: 50px;
+            height: 1px;
+            background: linear-gradient(to right, rgba(255,255,255,0.8), transparent);
+            border-radius: 0 50% 50% 0;
+        }
+
+        @keyframes fadeInText {
+            0% { opacity: 0; transform: translateY(30px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes sway {
+            0%, 100% { transform: rotate(-2deg); }
+            50% { transform: rotate(2deg); }
+        }
+
+        @keyframes glow {
+            0% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.6); }
+            100% { box-shadow: 0 0 30px rgba(255, 215, 0, 0.9); }
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        @keyframes shoot {
+            0% {
+                opacity: 0;
+                transform: translateX(-100px) translateY(-100px);
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+                transform: translateX(300px) translateY(200px);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .message {
+                font-size: 1.8rem;
+                margin: 0 20px;
+            }
+            
+            .sunflower {
+                transform: scale(0.7);
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1 class="message top">Estas no se van a marchitar... jajajaj</h1>
+    <h1 class="message bottom">Feliz día a la mujer más hermosa. Este viejito de 50 la ama mucho</h1>
+</div>
+
+    <div class="garden">
+        <div class="sunflower">
+            <div class="flower-head">
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+            </div>
+            <div class="stem"></div>
+        </div>
+        <div class="sunflower">
+            <div class="flower-head">
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+            </div>
+            <div class="stem"></div>
+        </div>
+        <div class="sunflower">
+            <div class="flower-head">
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+            </div>
+            <div class="stem"></div>
+        </div>
+        <div class="sunflower">
+            <div class="flower-head">
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+            </div>
+            <div class="stem"></div>
+        </div>
+        <div class="sunflower">
+            <div class="flower-head">
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+            </div>
+            <div class="stem"></div>
+        </div>
+        <div class="sunflower">
+            <div class="flower-head">
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+            </div>
+            <div class="stem"></div>
+        </div>
+    </div>
+
+    <script>
+        // Create stars
+        function createStars() {
+            for (let i = 0; i < 100; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 70 + '%';
+                star.style.animationDelay = Math.random() * 2 + 's';
+                document.body.appendChild(star);
+            }
+        }
+
+        // Create shooting stars
+
+
+        // Initialize
+        createStars();
+        createShootingStars();
+    </script>
+</body>
+</html>
